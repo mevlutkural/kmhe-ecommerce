@@ -20,6 +20,17 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.2/jquery.min.js"
         integrity="sha512-tWHlutFnuG0C6nQRlpvrEhE4QpkG1nn2MOUMWmUeRePl4e3Aki0VB6W1v3oLjFtd0hVOtRQ9PHpSfN6u6/QXkQ=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+        <style>
+            .preloader {
+                width: 100vw;
+                height: 100vh;
+                top: 0;
+                left: 0;
+                position: fixed;
+                z-index: 99999;
+                background: #fff;
+            }
+        </style>
     @yield('head')
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -37,6 +48,7 @@
         @include('backend.layout.header')
         @include('backend.layout.sidebar')
         <div class="page-wrapper">
+            @include('backend.layout.preloader')
             @yield('content')
         </div>
     </div>
@@ -52,14 +64,13 @@
     <script src="{{ asset('assets/js/backend/sidebarmenu.js') }}"></script>
     <script src="{{ asset('assets/js/backend/custom.min.js') }}"></script>
     <script src="{{ asset('assets/js/backend/c3.min.js') }}"></script>
-    <script src="../assets/extra-libs/c3/c3.min.js"></script>
     <script src="{{ asset('assets/js/backend/chartist.min.js') }}"></script>
     <script src="{{ asset('assets/js/backend/chartist-plugin-tooltip.min.js') }}"></script>
     <script src="{{ asset('assets/js/backend/jquery-jvectormap-2.0.2.min.js') }}"></script>
     <script src="{{ asset('assets/js/backend/jquery-jvectormap-world-mill-en.js') }}"></script>
     <script src="{{ asset('assets/js/backend/dashboard1.min.js') }}"></script>
     <script>
-        $(".preloader").hide();
+        $("#preloader").hide(500);
     </script>
     @yield('bottom')
 </body>

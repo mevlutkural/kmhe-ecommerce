@@ -3,14 +3,12 @@
 namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Backend\CreateUserRequest;
-use App\Http\Requests\Backend\EditUserRequest;
-use Illuminate\Http\Request;
+use App\Http\Requests\Backend\UserRequest;
 use App\Models\User;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Http\Response;
 
-class Users extends Controller
+class UserController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -20,7 +18,7 @@ class Users extends Controller
     public function index()
     {
         $users = User::all();
-        return view('backend.users.list_manager_users', ['users' => $users]);
+        return view('backend.users.list_manage_users', ['users' => $users]);
     }
 
     /**
@@ -39,7 +37,7 @@ class Users extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(CreateUserRequest $req)
+    public function store(UserRequest $req)
     {
         $user = new User();
         $data = $this->prepare($req, $user->getFillable());
@@ -67,7 +65,7 @@ class Users extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(EditUserRequest $req, User $user)
+    public function update(UserRequest $req, User $user)
     {
         $data = $this->prepare($req, $user->getFillable());
         $user->fill($data);
@@ -84,20 +82,29 @@ class Users extends Controller
      */
     public function destroy(User $user)
     {
-        $user->delete();
+        $this->checkRequest($user);
     }
 
     public function changePasswordForm(User $user)
     {
-        return view('backend.users.change_password', ['user'=>$user]);
+        return view('backend.users.change_password', ['user' => $user]);
     }
 
-    public function changePassword(User $user, EditUserRequest $req)
+    public function changePassword(User $user, UserRequest $req)
     {
         $data = $this->prepare($req, $user->getFillable());
         $user->fill($data);
         $user->save();
 
         return Redirect::to('/dashboard/users');
+    }
+
+    public function checkRequest($user)
+    {
+        if ($user->user_id == '1') {
+            return Response::json(['error' => 'You can\'t delete the default user.'], 423);
+        } else {
+            $user->delete();
+        }
     }
 }

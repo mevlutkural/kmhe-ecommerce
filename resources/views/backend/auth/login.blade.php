@@ -41,15 +41,15 @@
         <!-- Login box.scss -->
         <!-- ============================================================== -->
         <div class="auth-wrapper d-flex no-block justify-content-center align-items-center position-relative"
-            style="background:url(../assets/images/big/auth-bg.jpg) no-repeat center center;">
+            style="background:url({{ asset('assets/img/komek.webp') }}) no-repeat center;">
             <div class="auth-box row">
                 <div class="col-lg-7 col-md-5 modal-bg-img" style="background-image: url(../assets/images/big/3.jpg);">
                 </div>
                 <div class="col-lg-5 col-md-7 bg-white">
                     <div class="p-3">
-                        {{-- <div class="text-center">
-                            <img src="../assets/images/big/icon.png" alt="wrapkit">
-                        </div> --}}
+                        <div class="text-center">
+                            {{-- <img src="../assets/images/big/icon.png" alt="wrapkit"> --}}
+                        </div>
                         @if (session()->has('error_message'))
                         <div class="alert alert-danger" role="alert">
                             {{ session()->get('error_message') }}
@@ -84,7 +84,7 @@
                                     <button type="submit" class="btn btn-block btn-dark">Sign In</button>
                                 </div>
                                 <div class="col-lg-12 text-center mt-5">
-                                    Don't have an account? <a href="#" class="text-danger">Sign Up</a>
+                                    {{-- Don't have an account? <a href="#" class="text-danger">Sign Up</a> --}}
                                 </div>
                             </div>
                         </form>

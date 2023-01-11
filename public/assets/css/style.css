@@ -9582,3 +9582,9 @@ a.text-dark:hover, a.text-dark:focus {
     transform: translateY(-15px);
   }
 }
+
+@media screen and (min-width:576px) {
+    #navbar {
+        display: none !important;
+    }
+}

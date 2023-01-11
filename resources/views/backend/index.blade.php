@@ -1,6 +1,7 @@
 @extends('backend.layout.master')
+@section('title', 'Homepage | Komek E-Commerce')
 @section('content')
-{{--     <!-- Bread crumb and right sidebar toggle -->
+    <!-- Bread crumb and right sidebar toggle -->
     <div class="page-breadcrumb">
         <div class="row">
             <div class="col-7 align-self-center">
@@ -470,7 +471,7 @@
         </div>
         <!-- End Top Leader Table -->
     </div>
-    <!-- End Container fluid  --> --}}
+    <!-- End Container fluid  -->
     @include('backend.layout.footer')
 @endsection
 

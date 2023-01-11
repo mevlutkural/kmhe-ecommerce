@@ -1,9 +1,14 @@
 <?php
 
-use App\Http\Controllers\Backend\Auth;
+use App\Http\Controllers\Backend\AuthController;
+use App\Http\Controllers\Backend\CategoryController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Backend\MainController;
-use App\Http\Controllers\Backend\Users;
+use App\Http\Controllers\Backend\ProductController;
+use App\Http\Controllers\Backend\ProductImageController;
+use App\Http\Controllers\Backend\UserController;
+use App\Http\Controllers\BrandController;
+use App\Http\Controllers\Frontend\HomeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,20 +21,36 @@ use App\Http\Controllers\Backend\Users;
 |
 */
 
-Route::get('/', function () {
-    return redirect()->route('dashboard');
-});
+Route::get('/', [HomeController::class, 'index']);
 
 Route::group(['prefix' => 'dashboard'], function () {
-    Route::get('/login', [Auth::class, 'loginForm'])->name('loginForm');
-    Route::post('/login', [Auth::class, 'login'])->name('login');
+    Route::get('/login', [AuthController::class, 'loginForm'])->name('loginForm');
+    Route::post('/login', [AuthController::class, 'login'])->name('login');
 });
 
+/* products by category */
+Route::get('/category/{category_slug}', [HomeController::class, 'category']);
+
+/* dashboard */
 Route::group(['prefix' => 'dashboard', 'middleware' => 'AdminAuth'], function () {
+    /* main */
     Route::get('/', [MainController::class, 'index'])->name('dashboard');
-    Route::get('/logout', [Auth::class, 'logout'])->name('logout');
+    Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
+
     /* users */
-    Route::resource('/users', Users::class);
-    Route::get('/users/change-password/{user}', [Users::class, 'changePasswordForm']);
-    Route::post('/users/change-password/{user}', [Users::class, 'changePassword']);
+    Route::resource('/users', UserController::class);
+    Route::get('/users/change-password/{user}', [UserController::class, 'changePasswordForm']);
+    Route::post('/users/change-password/{user}', [UserController::class, 'changePassword']);
+
+    /* categories */
+    Route::resource('/categories', CategoryController::class);
+
+    /* products */
+    Route::resource('/products', ProductController::class);
+
+    /* products */
+    Route::resource('/brands', BrandController::class);
+
+    /* product images */
+    Route::resource('/products/{product}/product-images', ProductImageController::class);
 });

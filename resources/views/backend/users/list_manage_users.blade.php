@@ -75,7 +75,11 @@
                             $("#user" + user_id).hide('slow')
                         },
                         error: function(err) {
-                            alert(err)
+                            Swal.fire(
+                                'Error!',
+                                'The user couldn\'t delete. ',
+                                'error'
+                            )
                         }
                     });
                 }

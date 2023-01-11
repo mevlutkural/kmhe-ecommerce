@@ -14,28 +14,13 @@
                             </a>
                         </li>
                         <li class="list-divider"></li>
-                        {{--                         <li class="nav-small-cap">
-                            <span class="hide-menu">Applications</span>
-                        </li>
-                        <li class="sidebar-item"> <a class="sidebar-link" href="ticket-list.html"
-                                aria-expanded="false"><i data-feather="tag" class="feather-icon"></i><span
-                                    class="hide-menu">Ticket List
-                                </span></a>
-                        </li>
-                        <li class="sidebar-item"> <a class="sidebar-link sidebar-link" href="app-chat.html"
-                                aria-expanded="false"><i data-feather="message-square" class="feather-icon"></i><span
-                                    class="hide-menu">Chat</span></a></li>
-                        <li class="sidebar-item"> <a class="sidebar-link sidebar-link" href="app-calendar.html"
-                                aria-expanded="false"><i data-feather="calendar" class="feather-icon"></i><span
-                                    class="hide-menu">Calendar</span></a></li>
-                        <li class="list-divider"></li> --}}
                         <li class="nav-small-cap"><span class="hide-menu">Modules</span></li>
                         <li class="sidebar-item">
                             <a class="sidebar-link has-arrow" href="javascript:void(0)" aria-expanded="false">
                                 <i data-feather="users" class="feather-icon"></i>
                                 <span class="hide-menu">Users</span>
                             </a>
-                            <ul aria-expanded="false" class="collapse  first-level base-level-line">
+                            <ul aria-expanded="false" class="collapse first-level base-level-line">
                                 <li class="sidebar-item">
                                     <a href="{{ url('/dashboard/users') }}" class="sidebar-link">
                                         <span class="hide-menu"> List&Manage Users </span>
@@ -43,12 +28,67 @@
                                 </li>
                                 <li class="sidebar-item">
                                     <a href="{{ url('/dashboard/users/create') }}" class="sidebar-link">
-                                        <span class="hide-menu"> Create User </span>
+                                        <span class="hide-menu"> Create A User </span>
                                     </a>
                                 </li>
                             </ul>
                         </li>
-                        {{--              <li class="sidebar-item"> <a class="sidebar-link has-arrow" href="javascript:void(0)"
+                        <li class="sidebar-item">
+                            <a class="sidebar-link has-arrow" href="javascript:void(0)" aria-expanded="false">
+                                <i data-feather="grid" class="feather-icon"></i>
+                                <span class="hide-menu">Categories</span>
+                            </a>
+                            <ul aria-expanded="false" class="collapse  first-level base-level-line">
+                                <li class="sidebar-item">
+                                    <a href="{{ url('/dashboard/categories') }}" class="sidebar-link">
+                                        <span class="hide-menu"> List&Manage Categories </span>
+                                    </a>
+                                </li>
+                                <li class="sidebar-item">
+                                    <a href="{{ url('/dashboard/categories/create') }}" class="sidebar-link">
+                                        <span class="hide-menu"> Create A Category </span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="sidebar-item">
+                            <a class="sidebar-link has-arrow" href="javascript:void(0)" aria-expanded="false">
+                                <i data-feather="package" class="feather-icon"></i>
+                                <span class="hide-menu">Products</span>
+                            </a>
+                            <ul aria-expanded="false" class="collapse  first-level base-level-line">
+                                <li class="sidebar-item">
+                                    <a href="{{ url('/dashboard/products') }}" class="sidebar-link">
+                                        <span class="hide-menu"> List&Manage Products </span>
+                                    </a>
+                                </li>
+                                <li class="sidebar-item">
+                                    <a href="{{ url('/dashboard/products/create') }}" class="sidebar-link">
+                                        <span class="hide-menu"> Create A Product </span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="sidebar-item">
+                            <a class="sidebar-link has-arrow" href="javascript:void(0)" aria-expanded="false">
+                                <i data-feather="globe" class="feather-icon"></i>
+                                <span class="hide-menu">Brands</span>
+                            </a>
+                            <ul aria-expanded="false" class="collapse  first-level base-level-line">
+                                <li class="sidebar-item">
+                                    <a href="{{ url('/dashboard/brands') }}" class="sidebar-link">
+                                        <span class="hide-menu"> List&Manage Brands </span>
+                                    </a>
+                                </li>
+                                <li class="sidebar-item">
+                                    <a href="{{ url('/dashboard/brands/create') }}" class="sidebar-link">
+                                        <span class="hide-menu"> Create A Brand </span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        {{--
+                            <li class="sidebar-item"> <a class="sidebar-link has-arrow" href="javascript:void(0)"
                                 aria-expanded="false"><i data-feather="grid" class="feather-icon"></i><span
                                     class="hide-menu">Tables </span></a>
                             <ul aria-expanded="false" class="collapse  first-level base-level-line">
@@ -216,8 +256,7 @@
                         <li class="nav-small-cap"><span class="hide-menu">Extra</span></li>
 
                         <li class="sidebar-item">
-                            <a class="sidebar-link sidebar-link" href="{{ route('logout') }}"
-                                aria-expanded="false">
+                            <a class="sidebar-link sidebar-link" href="{{ route('logout') }}" aria-expanded="false">
                                 <i data-feather="log-out" class="feather-icon"></i>
                                 <span class="hide-menu">Logout</span>
                             </a>
