@@ -16,7 +16,7 @@
                     <th>Image</th>
                     <th>Brand Name</th>
                     <th>Alt</th>
-                    <th>Is Active</th>
+                    <th>Status</th>
                     <th>Created At</th>
                     <th>Updated At</th>
                     <th>Operations</th>
@@ -31,7 +31,7 @@
                         </td>
                         <td>{{ $brand->name }}</td>
                         <td>{{ $brand->alt }}</td>
-                        <td>{{ $brand->is_active }}</td>
+                        <td>{!! $brand->is_active == '1' ? '<span class="badge bg-success text-white">Active</span>' : '<span class="badge bg-danger text-white">Passive</span>' !!}</td>
                         <td>{{ $brand->created_at }}</td>
                         <td>{{ $brand->updated_at }}</td>
                         <td>

@@ -41,55 +41,18 @@ class ProductImageController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(ProductImage $productImage, ProductImageRequest $req)
+    public function store(Product $product, ProductImageRequest $req)
     {
+        $productImage = new ProductImage();
         $imageUrl = rand(10000, 90000) . trim(Carbon::now()->format('d-m-Y-H-i-s')) . '.' . $req->file('image_url')->getClientOriginalExtension();
         $req->file('image_url')->storeAs('public/uploads/product-images/', $imageUrl);
-        $result = ProductImage::create([
-            'image_url'  => $imageUrl,
-            'product_id' => $req->product_id,
-            'alt'        => 'product' . $req->product_id
-        ]);
+        $data = $this->prepare($req, $productImage->getFillable());
+        $data['image_url'] = $imageUrl;
+        $data['alt'] = $imageUrl;
+        $productImage->fill($data);
+        $productImage->save();
 
-        if ($result) {
-            return Redirect::to('/dashboard/products/' . $req->product_id . '/product-images');
-        } else {
-            return redirect()->route('product-images.index')->with('alert', 'failed');
-        }
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
+        return Redirect::to('/dashboard/products/' . $req->product_id . '/product-images');
     }
 
     /**

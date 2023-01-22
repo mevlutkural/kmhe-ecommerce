@@ -5,16 +5,16 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class ProductImage extends Model
+class Slider extends Model
 {
     use HasFactory;
-    protected $primaryKey = 'image_id';
 
+    protected $primaryKey = 'slider_id';
     protected $fillable = [
-        'image_id',
-        'product_id',
+        'slider_id',
+        'title',
+        'big_title',
         'image_url',
-        'alt',
         'is_active'
     ];
 }

@@ -7,7 +7,8 @@ use App\Http\Controllers\Backend\MainController;
 use App\Http\Controllers\Backend\ProductController;
 use App\Http\Controllers\Backend\ProductImageController;
 use App\Http\Controllers\Backend\UserController;
-use App\Http\Controllers\BrandController;
+use App\Http\Controllers\Backend\BrandController;
+use App\Http\Controllers\Backend\SliderController;
 use App\Http\Controllers\Frontend\HomeController;
 
 /*
@@ -47,10 +48,21 @@ Route::group(['prefix' => 'dashboard', 'middleware' => 'AdminAuth'], function ()
 
     /* products */
     Route::resource('/products', ProductController::class);
+    Route::post('/products/{product}/update-is-active', [ProductController::class, 'updateIsActive']);
+    Route::post('/products/{product}/update-stock-quantity', [ProductController::class, 'updateStockQuantity']);
+    /* Route::post('/products/{product_id}/update-is-active', function(){
+        return response('success');
+    }); */
 
     /* products */
     Route::resource('/brands', BrandController::class);
 
     /* product images */
     Route::resource('/products/{product}/product-images', ProductImageController::class);
+
+    /* slider */
+    Route::resource('/sliders', SliderController::class);
 });
+Route::get('/products/{product}/product-details', [ProductController::class, 'productDetails']);
+
+Route::get('/test', [ProductController::class, 'getProducts']);

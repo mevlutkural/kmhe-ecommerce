@@ -1,5 +1,5 @@
 @extends('backend.layout.master')
-@section('title', 'Homepage | Komek E-Commerce')
+@section('title', 'Dashboard | Komek E-Commerce')
 @section('content')
     <!-- Bread crumb and right sidebar toggle -->
     <div class="page-breadcrumb">

@@ -56,9 +56,9 @@
                         @enderror
                     </div>
                     <div class="col-md-6 mt-2 pl-5">
-                        <input type="checkbox" id="is_active" name="is_active" class="form-check-input" {{ old('is_active') ? 'checked' : ''}}>
-                        <label for="is_active" class="form-label" value="1">Is Active?</label>
-                        @error('description')
+                        <input type="checkbox" id="is_active" name="is_active" class="form-check-input" {{ old('testtesttest') ? 'checked' : ''}} value="1">
+                        <label for="is_active" class="form-label">Is Active?</label>
+                        @error('testtesttest')
                             <small class="text-danger">{{ $message }}</small>
                         @enderror
                     </div>

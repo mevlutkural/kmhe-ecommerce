@@ -54,32 +54,45 @@
                     </div>
                 </div>
             </nav>
-            <div id="header-carousel" class="carousel slide" data-ride="carousel">
-                <div class="carousel-inner">
-                    @foreach ($products as $product)
-                        <div class="carousel-item @if($loop->iteration == '1'){{ 'active' }}@endif" style="height: 410px;">
-                            <img class="img-fluid" src="{{ url('/storage/uploads/product-images/') }}/@foreach($product->images as $image){{ $loop->iteration == 1 ? $image->image_url : '' }}@endforeach" alt="Image">
-                            <div class="carousel-caption d-flex flex-column align-items-center justify-content-center">
-                                <div class="p-3" style="max-width: 700px;">
-                                    <h4 class="text-light text-uppercase font-weight-medium mb-3">{{ $product->product_price }}TL!</h4>
-                                    <h3 class="display-4 text-white font-weight-semi-bold mb-4">{{ $product->product_name }}</h3>
-                                    <a href="" class="btn btn-light py-2 px-3">Shop Now!</a>
+            @isset($productsByCategory)
+                <ul class="list-group">
+                    @foreach ($productsByCategory as $product)
+                        <li class="list-group-item">{{ $product->product_name }}</li>
+                    @endforeach
+                </ul>
+            @endisset
+            @isset($sliders)
+                <div id="header-carousel" class="carousel slide" data-ride="carousel">
+                    <div class="carousel-inner">
+                        @foreach ($sliders as $slider)
+                            <div class="carousel-item @if ($loop->iteration == '1') {{ 'active' }} @endif"
+                                style="height: 410px;">
+                                <img class="img-fluid" src="{{ url('/storage/uploads/slider-images/' . $slider->image_url) }}"
+                                    alt="Image">
+                                <div class="carousel-caption d-flex flex-column align-items-center justify-content-center">
+                                    <div class="p-3" style="max-width: 700px;">
+                                        <h4 class="text-light text-uppercase font-weight-medium mb-3">
+                                            {{ $slider->title }}</h4>
+                                        <h3 class="display-4 text-white font-weight-semi-bold mb-4">
+                                            {{ $slider->big_title }}</h3>
+                                        <a href="" class="btn btn-light py-2 px-3">Shop Now!</a>
+                                    </div>
                                 </div>
                             </div>
+                        @endforeach
+                    </div>
+                    <a class="carousel-control-prev" href="#header-carousel" data-slide="prev">
+                        <div class="btn btn-dark" style="width: 45px; height: 45px;">
+                            <span class="carousel-control-prev-icon mb-n2"></span>
                         </div>
-                    @endforeach
+                    </a>
+                    <a class="carousel-control-next" href="#header-carousel" data-slide="next">
+                        <div class="btn btn-dark" style="width: 45px; height: 45px;">
+                            <span class="carousel-control-next-icon mb-n2"></span>
+                        </div>
+                    </a>
                 </div>
-                <a class="carousel-control-prev" href="#header-carousel" data-slide="prev">
-                    <div class="btn btn-dark" style="width: 45px; height: 45px;">
-                        <span class="carousel-control-prev-icon mb-n2"></span>
-                    </div>
-                </a>
-                <a class="carousel-control-next" href="#header-carousel" data-slide="next">
-                    <div class="btn btn-dark" style="width: 45px; height: 45px;">
-                        <span class="carousel-control-next-icon mb-n2"></span>
-                    </div>
-                </a>
-            </div>
+            @endisset
         </div>
     </div>
 </div>

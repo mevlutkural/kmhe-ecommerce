@@ -1,56 +1,45 @@
 @extends('backend.layout.master')
-@section('title', 'Create Category | Komek E-Commerce')
+@section('title', 'Create Slider | Komek E-Commerce')
 @section('head')
     <script src="{{ asset('assets/js/jquery-3.5.1.js') }}"></script>
 @endsection
 @section('content')
     <div class="page-breadcrumb">
-        <h2>Brands > Create A Brand</h2>
+        <h2>Sliders > Create A Slider</h2>
         <div class="card-body">
-            <form class="mt-4" method="POST" action="{{ url('/dashboard/brands') }}" enctype="multipart/form-data">
+            <form class="mt-4" method="POST" action="{{ url('/dashboard/sliders') }}" enctype="multipart/form-data">
                 @csrf
                 <div class="row">
                     <div class="col-md-4">
-                        <label for="image_url" class="form-label">Brand Image</label>
+                        <label for="image_url" class="form-label">Image</label>
                         <input type="file" name="image_url" id="image_url">
                         @error('image_url')
                             <small class="text-danger">{{ $message }}</small>
                         @enderror
                     </div>
                     <div class="col-md-4">
-                        <label for="name" class="form-label">Brand Name</label>
-                        <input type="text" id="name" name="name" class="form-control"
-                            value="{{ old('name') }}">
-                        @error('name')
+                        <label for="title" class="form-label">Title</label>
+                        <input type="text" id="title" name="title" class="form-control"
+                            value="{{ old('title') }}">
+                        @error('title')
                             <small class="text-danger">{{ $message }}</small>
                         @enderror
                     </div>
                     <div class="col-md-4">
-                        <label for="alt" class="form-label">Alt</label>
-                        <input type="text" id="alt" name="alt" class="form-control"
-                            value="{{ old('alt') }}">
-                        @error('alt')
+                        <label for="big_title" class="form-label">Big Title</label>
+                        <input type="text" id="big_title" name="big_title" class="form-control"
+                            value="{{ old('big_title') }}">
+                        @error('big_title')
                             <small class="text-danger">{{ $message }}</small>
                         @enderror
                     </div>
-                    <div class="col-md-6 d-flex align-items-center justify-content-center mt-4">
-                        <div class="">
+                    <div class="col-md-6 d-flex align-items-center justify-content-start mt-4 ml-4  ">
+                        <div class="mt-1">
                             <input type="checkbox" id="is_active" name="is_active" class="form-check-input"
                             {{ old('is_active') ? 'checked' : '' }} value="1">
                         <label for="is_active" class="form-label">Is Active?</label>
                         </div>
                         @error('is_active')
-                            <small class="text-danger">{{ $message }}</small>
-                        @enderror
-                    </div>
-                    <div class="col-md-6">
-                        <label for="sequence" class="form-label">Sequence</label>
-                        <select type="text" id="sequence" name="sequence" class="form-control">
-                            @for ($i = 1; $i <= 12; $i++)
-                                <option value="{{$i}}"{{ $i == old('sequence') ? 'selected' : '' }}>{{$i}}</option>
-                            @endfor
-                        </select>
-                        @error('sequence')
                             <small class="text-danger">{{ $message }}</small>
                         @enderror
                     </div>

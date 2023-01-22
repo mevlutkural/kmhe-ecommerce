@@ -18,6 +18,13 @@
                             <small class="text-danger">{{ $message }}</small>
                         @enderror
                     </div>
+                    <div class="col-md-12 mt-2 pl-5">
+                        <input type="checkbox" id="is_active" name="is_active" class="form-check-input" value="1" checked>
+                        <label for="is_active" class="form-label">Is Active?</label>
+                        @error('description')
+                            <small class="text-danger">{{ $message }}</small>
+                        @enderror
+                    </div>
                     <div class="col-sm-12 mx-auto">
                         <div class="row">
                             <div class="col-sm-12 mt-3">

@@ -87,6 +87,24 @@
                                 </li>
                             </ul>
                         </li>
+                        <li class="sidebar-item">
+                            <a class="sidebar-link has-arrow" href="javascript:void(0)" aria-expanded="false">
+                                <i data-feather="image" class="feather-icon"></i>
+                                <span class="hide-menu">Slider</span>
+                            </a>
+                            <ul aria-expanded="false" class="collapse  first-level base-level-line">
+                                <li class="sidebar-item">
+                                    <a href="{{ url('/dashboard/sliders') }}" class="sidebar-link">
+                                        <span class="hide-menu"> List&Manage Slider Items </span>
+                                    </a>
+                                </li>
+                                <li class="sidebar-item">
+                                    <a href="{{ url('/dashboard/sliders/create') }}" class="sidebar-link">
+                                        <span class="hide-menu"> Create A Slider Item </span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
                         {{--
                             <li class="sidebar-item"> <a class="sidebar-link has-arrow" href="javascript:void(0)"
                                 aria-expanded="false"><i data-feather="grid" class="feather-icon"></i><span

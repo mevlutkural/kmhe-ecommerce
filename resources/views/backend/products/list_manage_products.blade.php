@@ -16,6 +16,7 @@
                     <th>Category</th>
                     <th>Slug</th>
                     <th>Price</th>
+                    <th>Is Active?</th>
                     <th>Short Description</th>
                     <th>Description</th>
                     <th>Created At</th>
@@ -30,6 +31,14 @@
                         <td>{{ $product->category->category_name }}</td>
                         <td>{{ $product->slug }}</td>
                         <td>{{ $product->product_price }}</td>
+                        <td>
+                            <div class="custom-control custom-switch">
+                                <input type="checkbox" class="custom-control-input" id="isActiveButton{{ $product->product_id }}"
+                                    onchange="updateIsActive('isActiveButton{{ $product->product_id }}', {{ $product->product_id }})"
+                                    {{ $product->is_active == '1' ? 'checked' : '' }}>
+                                <label class="custom-control-label" for="isActiveButton{{ $product->product_id }}"></label>
+                            </div>
+                        </td>
                         <td>{{ $product->short_description }}</td>
                         <td>{{ $product->description }}</td>
                         <td>{{ $product->created_at }}</td>
@@ -41,11 +50,12 @@
                                         class="btn btn-warning">Edit</a>
                                 </li>
                                 <li class="nav-item ml-2">
-                                    <a href="{{ url('/dashboard/products/' . $product->product_id . '/product-images' ) }}"
+                                    <a href="{{ url('/dashboard/products/' . $product->product_id . '/product-images') }}"
                                         class="btn btn-info">Product Images</a>
                                 </li>
                                 <li class="nav-item ml-2">
-                                    <button onclick="deleteProduct('{{ url('/dashboard/products/') }}',{{ $product->product_id }})"
+                                    <button
+                                        onclick="deleteProduct('{{ url('/dashboard/products/') }}',{{ $product->product_id }})"
                                         class="btn btn-danger ms-2">Remove</button>
                                 </li>
                             </ul>
@@ -61,10 +71,38 @@
     <script src="{{ asset('assets/js/dataTables.responsive.min.js') }}"></script>
     <script src="{{ asset('assets/js/responsive.bootstrap5.min.js') }}"></script>
     <script>
+        function updateIsActive(elementId, productId) {
+            console.log('hello')
+            let isActive = document.getElementById(elementId).checked ? '1' : '0';
+             function postData() {
+                let url = `http://127.0.0.1:8000/dashboard/products/${productId}/update-is-active`;
+
+                /* $.post(``, {is_active : isActive, _token : '{{ csrf_token() }}'}, function(res){
+                  console.log(res)
+                }) */
+                $.ajax({
+                        data: {
+                            '_token': "{{ csrf_token() }}",
+                            'is_active': isActive
+                        },
+                        url: url,
+                        type: 'POST',
+                        success: function(res) {
+
+                        },
+                        error: function(err) {
+
+                        }
+                    });
+            }
+
+            postData();
+        }
         var table = '';
         $(function() {
             table = $('#productsTable').DataTable();
         });
+
         function test(url, id) {
             var product = $('tbody tr#product' + id);
             console.log(table.row(product).remove().draw());

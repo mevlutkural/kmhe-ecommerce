@@ -1,5 +1,5 @@
 @extends('backend.layout.master')
-@section('title', 'Categories | Komek E-Commerce')
+@section('title', 'Sliders | Komek E-Commerce')
 @section('head')
     <script src="{{ asset('assets/js/jquery-3.5.1.js') }}"></script>
     <link rel="stylesheet" href="{{ asset('assets/css/dataTables.bootstrap5.min.css') }}">
@@ -8,37 +8,36 @@
 @endsection
 @section('content')
     <div class="page-breadcrumb">
-        <h2 class="mb-3">Categories</h2>
-        <table id="categoriesTable" class="table table-striped dt-responsive nowrap" style="width:100%">
+        <h2 class="mb-3">Sliders</h2>
+        <table id="slidersTable" class="table table-striped dt-responsive nowrap" style="width:100%">
             <thead>
                 <tr>
-                    <th>Category Name</th>
-                    <th>Category Slug</th>
-                    <th>Parent Category</th>
+                    <th>Image</th>
+                    <th>Title</th>
+                    <th>Big Title</th>
                     <th>Status</th>
-                    <th>Created At</th>
-                    <th>Updated At</th>
-                    <th>Operations</th>
+                    <th>Status</th>
                 </tr>
             </thead>
             <tbody>
-                @foreach ($categories as $category)
-                    <tr id="category{{ $category->id }}">
-                        <td>{{ $category->category_name }}</td>
-                        <td>{{ $category->category_slug }}</td>
-                        <td>{{ $category->parent->category_name ?? 'Main Category' }}</td>
-                        <td>{!! $category->is_active == '1' ? '<span class="badge bg-success text-white">Active</span>' : '<span class="badge bg-danger text-white">Passive</span>' !!}</td>
-                        <td>{{ $category->created_at }}</td>
-                        <td>{{ $category->updated_at }}</td>
+                @foreach ($sliders as $slider)
+                    <tr id="slider{{ $slider->slider_id }}">
+                        <td>
+                            <img src="/storage/uploads/slider-images/{{ $slider->image_url }}" alt=""
+                                style="max-width: 80px;max-height:50px">
+                        </td>
+                        <td>{{ $slider->title }}</td>
+                        <td>{{ $slider->big_title }}</td>
+                        <td>{{ $slider->is_active }}</td>
                         <td>
                             <ul class="nav">
                                 <li class="nav-item">
-                                    <a href="{{ url('/dashboard/categories/' . $category->id . '/edit') }}"
+                                    <a href="{{ url('/dashboard/sliders/' . 1 . '/edit') }}"
                                         class="btn btn-warning">Edit</a>
                                 </li>
                                 <li class="nav-item ml-2">
                                     <button
-                                        onclick="deleteCategory('{{ url('/dashboard/categories/') }}',{{ $category->id }}, '@foreach ($category->children as $child){{ $child->id . ',' }} @endforeach')"
+                                        onclick="deleteslider('{{ url('/dashboard/sliders/') }}',{{ $slider->slider_id }})"
                                         class="btn btn-danger ms-2">Remove</button>
                                 </li>
                             </ul>
@@ -55,19 +54,17 @@
     <script src="{{ asset('assets/js/responsive.bootstrap5.min.js') }}"></script>
     <script>
         var table = '';
-        $(document).ready(function() {
-            table = $('#categoriesTable').DataTable();
+        $(function() {
+            table = $('#slidersTable').DataTable();
         });
-        function test(url, id, children) {
-            var splitted = children.split(',')
-            for (let i = 0; i <= splitted.length; i++) {
-                if (typeof(splitted[i]) !== null && splitted[i] != '' && splitted[i] != ' ') {
-                    $("#category" + splitted[i]).hide('slow')
-                }
-            }
+
+        function test(url, id) {
+            var slider = $('tbody tr#slider' + id);
+            console.log(table.row(slider).remove().draw());
+            /* $("#slider" + id).hide('slow'); */
         }
 
-        function deleteCategory(url, id, children) {
+        function deleteslider(url, id) {
             Swal.fire({
                 title: 'Are you sure?',
                 text: "You won't be able to revert this!",
@@ -88,34 +85,26 @@
                         success: function(res) {
                             Swal.fire(
                                 'Deleted!',
-                                'The category has been deleted.',
+                                'The slider has been deleted.',
                                 'success'
                             )
-                            var splitted = children.split(',')
-                            for (let i = 0; i <= splitted.length; i++) {
-                                if (typeof(splitted[i]) !== null && splitted[i] != '' && splitted[i] !=
-                                    ' ') {
-                                    $("#category" + splitted[i]).hide('slow')
-                                    setTimeout(() => {
-                                        $("#category" + splitted[i]).remove()
-                                    }, 1500);
-                                }
-                            }
-                            $("#category" + id).hide('slow')
+                            $("#slider" + id).hide('slow')
                             setTimeout(() => {
-                                var category = $('#category' + id);
-                                table.row(category).remove().draw()
-                                if ($('#categoriesTable tbody tr').length < 1) {
-                                    $("#categoriesTable").find('tbody').append(
+                                var slider = $('#slider' + id);
+                                table.row(slider).remove().draw()
+                                /* $("#slider" + id).remove() */
+                                if ($('#slidersTable tbody tr').length < 1) {
+                                    $("#slidersTable").find('tbody').append(
                                         '<tr><td colspan="6" class="text-center">There is no any record.</td></tr>'
-                                        )
+                                    )
                                 }
                             }, 1500);
                         },
                         error: function(err) {
+                            console.log(err);
                             Swal.fire(
                                 'Error!',
-                                'The category couldn\'t delete. ',
+                                'The slider couldn\'t delete. ',
                                 'error'
                             )
                         }

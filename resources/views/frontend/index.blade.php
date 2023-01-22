@@ -1,5 +1,7 @@
 @extends('frontend.layout.master')
-@section('title', 'Anasayfa')
+@section('title', 'Komek | E-Commerce')
+@include('frontend.widgets.topbar')
+@include('frontend.widgets.navbar')
 @section('content')
 @include('frontend.widgets.featured')
 @include('frontend.widgets.categories')

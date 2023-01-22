@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class CategoryRequest extends FormRequest
+class SliderRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,10 +23,8 @@ class CategoryRequest extends FormRequest
      */
     public function rules()
     {
-        $category_id = request()->input('category_id');
-
         return [
-            'category_name' => "required|sometimes|string|min:2|unique:App\Models\Category,category_id,$category_id"
+            //
         ];
     }
 }

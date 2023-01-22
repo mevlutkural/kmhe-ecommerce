@@ -7,11 +7,19 @@ use App\Http\Requests\ProductRequest;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use App\Models\Category;
+use App\Models\ProductImage;
+use App\Models\Slider;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Str;
 
 class ProductController extends Controller
 {
+    private $categories,$products;
+    public function __construct()
+    {
+        $this->categories = Category::where('is_active', '1')->get();
+        $this->products = Product::all();
+    }
     /**
      * Display a listing of the resource.
      *
@@ -19,7 +27,7 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $protducts = Product::all();
+        $protducts = $this->products;
 
         return view('backend.products.list_manage_products', ['products' => $protducts]);
     }
@@ -31,7 +39,7 @@ class ProductController extends Controller
      */
     public function create()
     {
-        $categories = Category::all();
+        $categories = $this->categories;
 
         return view('backend.products.create_product', ['categories' => $categories]);
     }
@@ -45,11 +53,9 @@ class ProductController extends Controller
     public function store(ProductRequest $req)
     {
         /* dd($req->input()); */
-        $isActive = $req->is_active == '1' ? '1' : '0';
         $product = new Product();
         $data = $this->prepare($req, $product->getFillable());
         $data['slug'] = Str::slug($req->product_name);
-        $data['is_active'] = $isActive;
         $product->fill($data);
         $product->save();
 
@@ -75,7 +81,7 @@ class ProductController extends Controller
      */
     public function edit(Product $product)
     {
-        $categories = Category::all();
+        $categories = $this->categories;
 
         return view('backend.products.edit_product', ['categories' => $categories, 'product' => $product]);
     }
@@ -112,5 +118,42 @@ class ProductController extends Controller
         } else {
             return response('failed', 401)->header('Content-type', 'text/plain');
         }
+    }
+
+    public function getProducts()
+    {
+        $products = Product::get();
+        $products[0]->image = ProductImage::first()->image_url;
+        return response()->json($products);
+    }
+
+    public function productDetails(Product $product)
+    {
+        $categories = $this->categories;
+        $products = $this->getProductsByCategory($product->category_id);
+        $sliders = Slider::where('is_active', '1')->get();
+
+        return view('frontend.product_detail', ['product' => $product, 'categories' => $categories, 'products' => $products]);
+    }
+
+    public function getProductsByCategory($category_id)
+    {
+        return Product::where('category_id', $category_id)->get();
+    }
+
+    public function updateIsActive(Product $product, Request $req)
+    {
+        $product->is_active = $req->is_active;
+        $result = $product->save();
+
+        return response($product);
+    }
+
+    public function updateStockQuantity(Product $product, Request $req)
+    {
+        $product->stock_quantity = $req->stock_quantity;
+        $result = $product->save();
+
+        return response($product);
     }
 }

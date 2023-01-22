@@ -26,8 +26,6 @@
     <link href="{{ asset('assets/css/style.css') }}" rel="stylesheet">
 </head>
 <body>
-    @include('frontend.widgets.topbar')
-    @include('frontend.widgets.navbar')
     @yield('content')
     @include('frontend.widgets.footer')
     @include('frontend.widgets.backtotop')

@@ -12,7 +12,8 @@ class Category extends Model
         'id',
         'category_name',
         'category_slug',
-        'category_id'
+        'category_id',
+        'is_active'
     ];
 
     public function parent()
