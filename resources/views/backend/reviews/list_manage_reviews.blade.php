@@ -1,5 +1,5 @@
 @extends('backend.layout.master')
-@section('title', 'Products | Komek E-Commerce')
+@section('title', 'Reviews | Komek E-Commerce')
 @section('head')
     <script src="{{ asset('assets/js/jquery-3.5.1.js') }}"></script>
     <link rel="stylesheet" href="{{ asset('assets/css/dataTables.bootstrap5.min.css') }}">
@@ -8,54 +8,46 @@
 @endsection
 @section('content')
     <div class="page-breadcrumb">
-        <h2 class="mb-3">Products</h2>
-        <table id="productsTable" class="table table-striped dt-responsive nowrap" style="width:100%">
+        <h2 class="mb-3">Reviews</h2>
+        <table id="reviewsTable" class="table table-striped dt-responsive nowrap" style="width:100%">
             <thead>
                 <tr>
-                    <th>Product Name</th>
-                    <th>Category</th>
-                    <th>Slug</th>
-                    <th>Price</th>
-                    <th>Is Active?</th>
-                    <th>Short Description</th>
-                    <th>Description</th>
+                    <th>Name</th>
+                    <th>Content</th>
+                    <th>Product</th>
+                    <th>Rate</th>
+                    <th>Status</th>
                     <th>Created At</th>
                     <th>Updated At</th>
                     <th>Operations</th>
                 </tr>
             </thead>
             <tbody>
-                @foreach ($products as $product)
-                    <tr id="product{{ $product->product_id }}">
-                        <td>{{ $product->product_name }}</td>
-                        <td>{{ $product->category->category_name }}</td>
-                        <td>{{ $product->slug }}</td>
-                        <td>{{ $product->product_price }}</td>
+                @foreach ($reviews as $review)
+                    <tr id="review{{ $review->review_id }}">
+                        <td>{{ $review->name }}</td>
+                        <td>{{ $review->content }}</td>
+                        <td>{{ $review->product->product_name }}</td>
+                        <td>{{ $review->rating }}</td>
                         <td>
                             <div class="custom-control custom-switch">
-                                <input type="checkbox" class="custom-control-input" id="isActiveButton{{ $product->product_id }}"
-                                    onchange="updateIsActive('isActiveButton{{ $product->product_id }}', {{ $product->product_id }})"
-                                    {{ $product->is_active == '1' ? 'checked' : '' }}>
-                                <label class="custom-control-label" for="isActiveButton{{ $product->product_id }}"></label>
+                                <input type="checkbox" class="custom-control-input" id="isActiveButton{{ $review->review_id }}"
+                                    onchange="updateIsActive('isActiveButton{{ $review->review_id }}', {{ $review->review_id }})"
+                                    {{ $review->is_active == '1' ? 'checked' : '' }}>
+                                <label class="custom-control-label" for="isActiveButton{{ $review->review_id }}"></label>
                             </div>
                         </td>
-                        <td>{{ $product->short_description }}</td>
-                        <td>{{ $product->description }}</td>
-                        <td>{{ $product->created_at }}</td>
-                        <td>{{ $product->updated_at }}</td>
+                        <td>{{ $review->created_at }}</td>
+                        <td>{{ $review->updated_at }}</td>
                         <td>
                             <ul class="nav">
                                 <li class="nav-item">
-                                    <a href="{{ url('/dashboard/products/' . $product->product_id . '/edit') }}"
+                                    <a href="{{ url('/dashboard/reviews/' . $review->id . '/edit') }}"
                                         class="btn btn-warning">Edit</a>
                                 </li>
                                 <li class="nav-item ml-2">
-                                    <a href="{{ url('/dashboard/products/' . $product->product_id . '/product-images') }}"
-                                        class="btn btn-info">Product Images</a>
-                                </li>
-                                <li class="nav-item ml-2">
                                     <button
-                                        onclick="deleteProduct('{{ url('/dashboard/products/') }}',{{ $product->product_id }})"
+                                        onclick="deletereview('{{ url('/dashboard/reviews/') }}',{{ $review->review_id }})"
                                         class="btn btn-danger ms-2">Remove</button>
                                 </li>
                             </ul>
@@ -71,14 +63,11 @@
     <script src="{{ asset('assets/js/dataTables.responsive.min.js') }}"></script>
     <script src="{{ asset('assets/js/responsive.bootstrap5.min.js') }}"></script>
     <script>
-        function updateIsActive(elementId, productId) {
+                function updateIsActive(elementId, reviewId) {
+            console.log('hello')
             let isActive = document.getElementById(elementId).checked ? '1' : '0';
              function postData() {
-                let url = `http://127.0.0.1:8000/dashboard/products/${productId}/update-is-active`;
-
-                /* $.post(``, {is_active : isActive, _token : '{{ csrf_token() }}'}, function(res){
-                  console.log(res)
-                }) */
+                let url = `http://127.0.0.1:8000/dashboard/reviews/${reviewId}/update-is-active`;
                 $.ajax({
                         data: {
                             '_token': "{{ csrf_token() }}",
@@ -97,18 +86,21 @@
 
             postData();
         }
-        var table = '';
-        $(function() {
-            table = $('#productsTable').DataTable();
-        });
 
-        function test(url, id) {
-            var product = $('tbody tr#product' + id);
-            console.log(table.row(product).remove().draw());
-            /* $("#product" + id).hide('slow'); */
+        var table = '';
+        $(document).ready(function() {
+            table = $('#reviewsTable').DataTable();
+        });
+        function test(url, id, children) {
+            var splitted = children.split(',')
+            for (let i = 0; i <= splitted.length; i++) {
+                if (typeof(splitted[i]) !== null && splitted[i] != '' && splitted[i] != ' ') {
+                    $("#review" + splitted[i]).hide('slow')
+                }
+            }
         }
 
-        function deleteProduct(url, id) {
+        function deletereview(url, id) {
             Swal.fire({
                 title: 'Are you sure?',
                 text: "You won't be able to revert this!",
@@ -129,25 +121,24 @@
                         success: function(res) {
                             Swal.fire(
                                 'Deleted!',
-                                'The product has been deleted.',
+                                'The review has been deleted.',
                                 'success'
                             )
-                            $("#product" + id).hide('slow')
+                            $("#review" + id).hide('slow')
                             setTimeout(() => {
-                                var product = $('#product' + id);
-                                table.row(product).remove().draw()
-                                /* $("#product" + id).remove() */
-                                if ($('#productsTable tbody tr').length < 1) {
-                                    $("#productsTable").find('tbody').append(
+                                var review = $('#review' + id);
+                                table.row(review).remove().draw()
+                                if ($('#reviewsTable tbody tr').length < 1) {
+                                    $("#reviewsTable").find('tbody').append(
                                         '<tr><td colspan="6" class="text-center">There is no any record.</td></tr>'
-                                    )
+                                        )
                                 }
                             }, 1500);
                         },
                         error: function(err) {
                             Swal.fire(
                                 'Error!',
-                                'The product couldn\'t delete. ',
+                                'The review couldn\'t delete. ',
                                 'error'
                             )
                         }

@@ -68,6 +68,9 @@
         </div>
     </div>
     <!-- Navbar End --> --}}
+    @php
+        $dontCollapse = true;
+    @endphp
     @include('frontend.widgets.navbar')
 
     <!-- Page Header Start -->
@@ -97,14 +100,16 @@
                                         alt="Image">
                                 </div>
                             @endforeach
+                            @if (count($product->images) > 0)
+                                <a class="carousel-control-prev" href="#product-carousel" data-slide="prev">
+                                    <i class="fa fa-2x fa-angle-left text-dark"></i>
+                                </a>
+                                <a class="carousel-control-next" href="#product-carousel" data-slide="next">
+                                    <i class="fa fa-2x fa-angle-right text-dark"></i>
+                                </a>
+                            @endif
                         @endif
                     </div>
-                    <a class="carousel-control-prev" href="#product-carousel" data-slide="prev">
-                        <i class="fa fa-2x fa-angle-left text-dark"></i>
-                    </a>
-                    <a class="carousel-control-next" href="#product-carousel" data-slide="next">
-                        <i class="fa fa-2x fa-angle-right text-dark"></i>
-                    </a>
                 </div>
             </div>
 
@@ -118,7 +123,7 @@
                         <small class="fas fa-star-half-alt"></small>
                         <small class="far fa-star"></small>
                     </div>
-                    <small class="pt-1">(50 Reviews)</small>
+                    <small class="pt-1">({{ count($reviews) }} Reviews)</small>
                 </div>
                 <h3 class="font-weight-semi-bold mb-4">{{ $product->product_price }}$</h3>
                 <p class="mb-4">{{ $product->short_description }}</p>
@@ -175,7 +180,8 @@
                 <div class="d-flex align-items-center mb-4 pt-2">
                     <div class="input-group quantity mr-3" style="width: 130px;">
                         <div class="input-group-btn">
-                            <button class="btn btn-primary btn-minus" onclick="updateStockQuantity('stockQuantity', {{ $product->product_id }})">
+                            <button class="btn btn-primary btn-minus"
+                                onclick="updateStockQuantity('stockQuantity', {{ $product->product_id }})">
                                 <i class="fa fa-minus"></i>
                             </button>
                         </div>
@@ -183,7 +189,8 @@
                             value="{{ $product->stock_quantity }}"
                             oninput="updateStockQuantity('stockQuantity', {{ $product->product_id }})">
                         <div class="input-group-btn">
-                            <button class="btn btn-primary btn-plus" onclick="updateStockQuantity('stockQuantity', {{ $product->product_id }})">
+                            <button class="btn btn-primary btn-plus"
+                                onclick="updateStockQuantity('stockQuantity', {{ $product->product_id }})">
                                 <i class="fa fa-plus"></i>
                             </button>
                         </div>
@@ -214,7 +221,8 @@
                 <div class="nav nav-tabs justify-content-center border-secondary mb-4">
                     <a class="nav-item nav-link active" data-toggle="tab" href="#tab-pane-1">Description</a>
                     <a class="nav-item nav-link" data-toggle="tab" href="#tab-pane-2">Information</a>
-                    <a class="nav-item nav-link" data-toggle="tab" href="#tab-pane-3">Reviews (0)</a>
+                    <a class="nav-item nav-link" data-toggle="tab" href="#tab-pane-3">Reviews
+                        ({{ count($reviews) }})</a>
                 </div>
                 <div class="tab-content">
                     <div class="tab-pane fade show active" id="tab-pane-1">
@@ -268,23 +276,37 @@
                     <div class="tab-pane fade" id="tab-pane-3">
                         <div class="row">
                             <div class="col-md-6">
-                                <h4 class="mb-4">1 review for "Colorful Stylish Shirt"</h4>
-                                <div class="media mb-4">
-                                    <img src="img/user.jpg" alt="Image" class="img-fluid mr-3 mt-1"
-                                        style="width: 45px;">
-                                    <div class="media-body">
-                                        <h6>John Doe<small> - <i>01 Jan 2045</i></small></h6>
-                                        <div class="text-primary mb-2">
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star-half-alt"></i>
-                                            <i class="far fa-star"></i>
+                                @isset($reviews)
+                                    @if (count($reviews) > 0)
+                                        <h4 class="mb-4">{{ count($reviews) }} review for {{ $product->product_name }}
+                                            @foreach ($reviews as $review)
+                                        </h4>
+                                        <div class="media mb-4">
+                                            @if ($review->image == 'null')
+                                                <img src="{{ asset('assets/img/default_user.webp') }}"
+                                                    alt="product_review{{ $review->review_id }}" class="img-fluid mr-3 mt-1"
+                                                    style="width: 45px;" alt="default-user-image" title="default user image">
+                                            @else
+                                                <img src="{{ asset('assets/img/default_user.webp') }}"
+                                                    alt="product_review{{ $review->review_id }}" class="img-fluid mr-3 mt-1"
+                                                    style="width: 45px;" alt="user-image" title="user image">
+                                            @endif
+                                            <div class="media-body">
+                                                <h6>{{ $review->name }}<small> -
+                                                        <i>{{ $review->created_at->format('d M Y') }}</i></small></h6>
+                                                <div class="text-primary mb-2">
+                                                    @for ($i = 1; $i <= $review->rating; $i++)
+                                                        <i class="fas fa-star"></i>
+                                                    @endfor
+                                                </div>
+                                                <p>{{ $review->content }}</p>
+                                            </div>
                                         </div>
-                                        <p>Diam amet duo labore stet elitr ea clita ipsum, tempor labore accusam ipsum et no
-                                            at. Kasd diam tempor rebum magna dolores sed sed eirmod ipsum.</p>
-                                    </div>
-                                </div>
+                                    @endforeach
+                                @else
+                                    <h4 class="mb-4">There is not any review for {{ $product->product_name }} yet.</h4>
+                                    @endif
+                                @endisset
                             </div>
                             <div class="col-md-6">
                                 <h4 class="mb-4">Leave a review</h4>
@@ -292,29 +314,31 @@
                                 <div class="d-flex my-3">
                                     <p class="mb-0 mr-2">Your Rating * :</p>
                                     <div class="text-primary">
-                                        <i class="far fa-star"></i>
-                                        <i class="far fa-star"></i>
-                                        <i class="far fa-star"></i>
-                                        <i class="far fa-star"></i>
-                                        <i class="far fa-star"></i>
+                                        @for ($i = 1; $i <= 5; $i++)
+                                            <i id="rate{{ $i }}" class="far fa-star"
+                                                onclick="setRate({{ $i }})"></i>
+                                        @endfor
                                     </div>
                                 </div>
-                                <form>
+                                <form id="newReviewForm" type="POST" action="/dashboard/reviews">
+                                    <input id="rating" type="hidden" name="rating" value="5">
+                                    <input type="hidden" name="product_id" value="{{ $product->product_id }}">
                                     <div class="form-group">
-                                        <label for="message">Your Review *</label>
-                                        <textarea id="message" cols="30" rows="5" class="form-control"></textarea>
+                                        <label for="content">Your Review *</label>
+                                        <textarea id="content" cols="30" rows="5" class="form-control" name="content"></textarea>
                                     </div>
                                     <div class="form-group">
                                         <label for="name">Your Name *</label>
-                                        <input type="text" class="form-control" id="name">
+                                        <input type="text" class="form-control" id="name" name="name">
                                     </div>
                                     <div class="form-group">
                                         <label for="email">Your Email *</label>
-                                        <input type="email" class="form-control" id="email">
+                                        <input type="email" class="form-control" id="email" name="email">
                                     </div>
                                     <div class="form-group mb-0">
                                         <input type="submit" value="Leave Your Review" class="btn btn-primary px-3">
                                     </div>
+                                    <div id="alert" class="alert" role="alert" style="display: none"></div>
                                 </form>
                             </div>
                         </div>
@@ -327,7 +351,7 @@
 
 
     <!-- Products Start -->
-    <div class="container-fluid py-5">
+    {{-- <div class="container-fluid py-5">
         <div class="text-center mb-4">
             <h2 class="section-title px-5"><span class="px-2">You May Also Like</span></h2>
         </div>
@@ -362,19 +386,72 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> --}}
     <!-- Products End -->
     <script>
+        function setRate(rate) {
+            $("input#rating").val(rate);
+            for (let i = 1; i <= 5; i++) {
+                $("#rate" + i).removeClass('fas');
+            }
+            for (let i = 1; i <= Number(rate); i++) {
+                $("#rate" + i).addClass('fas')
+            }
+        }
+
+        $(function() {
+            let forms = document.getElementsByTagName("form");
+            [...forms].forEach((element) => {
+                $(element).on("submit", function(e) {
+                    e.preventDefault();
+                    let url = e.currentTarget.action;
+                    let isConfirmed = true; /* confirm('Ok?'); */
+                    let formData = $(e.currentTarget).serialize();
+                    formData += '&_token=' + '{{ csrf_token() }}'
+                    if (isConfirmed) {
+                        $.ajax({
+                            type: "POST",
+                            url: 'http://127.0.0.1:8000/dashboard/reviews',
+                            data: formData,
+                            success: function(res) {
+                                if (res) {
+                                    let alert = $("#alert");
+                                    $(alert).text(res)
+                                    $(alert).fadeIn('slow')
+                                    if ($(alert).hasClass('alert-danger')) {
+                                        $(alert).removeClass('alert-danger');
+                                    }
+                                    $(alert).addClass('alert-success');
+                                    setTimeout(() => {
+                                        $(alert).fadeOut('slow');
+                                    }, 5500)
+                                }
+                            },
+                            error: function(err) {
+                                let alert = $("#alert");
+                                $(alert).text(err)
+                                $(alert).fadeIn('slow')
+                                if ($(alert).hasClass('alert-success')) {
+                                    $(alert).removeClass('alert-success');
+                                }
+                                $(alert).addClass('alert-danger');
+                                setTimeout(() => {
+                                    $(alert).fadeOut('slow');
+                                }, 5500)
+                            },
+                        });
+                    }
+                });
+            });
+        });
+
         function updateStockQuantity(elementId, productId) {
             setTimeout(() => {
                 let stockQuantity = Number(document.getElementById(elementId).value);
                 postData();
+
                 function postData() {
                     let url = `http://127.0.0.1:8000/dashboard/products/${productId}/update-stock-quantity`;
-
-                    /* $.post(``, {is_active : isActive, _token : '{{ csrf_token() }}'}, function(res){
-                      console.log(res)
-                    }) */
                     $.ajax({
                         data: {
                             '_token': "{{ csrf_token() }}",
@@ -385,12 +462,60 @@
                         success: function(res) {
 
                         },
-                        error: function(err) {
-                        }
+                        error: function(err) {}
                     });
                 }
-            }, 500);
 
+                /* function newReview(rating, review, name, email, productId) {
+                    let form = document.getElementById('newReviewForm');
+                    form.addEventListener('submit', (e) => {
+                        e.preventDefault();
+                        [...this.elements].forEach(input => {
+
+                        })
+                    });
+                    let url = `http://127.0.0.1:8000/dashboard/reviews`;
+                    $.ajax({
+                        data: {
+                            '_token': "{{ csrf_token() }}",
+                            'rating': rating,
+                            'review': review,
+                            'name': name,
+                            'email': email,
+                            'product_id': productId
+                        },
+                        url: url,
+                        type: 'POST',
+                        success: function(res) {
+                            console.log(res);
+                        },
+                        error: function(err) {
+                            console.log(err);
+                        }
+                    });
+                } */
+
+
+            }, 500);
         }
+
+        /* function newReview() {
+            let form = document.getElementById('newReviewForm');
+            $.ajax({
+                data: {
+                    ...$(this).serialize(),
+                    _token: "{{ csrf_token() }}"
+
+                },
+                url: 'http://127.0.0.1:8000/dashboard/reviews',
+                type: 'POST',
+                success: function(res) {
+                    console.log(res)
+                },
+                error: function(err) {
+                    console.log(err)
+                }
+            });
+        } */
     </script>
 @endsection

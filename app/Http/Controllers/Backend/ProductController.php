@@ -8,6 +8,7 @@ use App\Models\Product;
 use Illuminate\Http\Request;
 use App\Models\Category;
 use App\Models\ProductImage;
+use App\Models\Review;
 use App\Models\Slider;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Str;
@@ -113,11 +114,10 @@ class ProductController extends Controller
     {
         $result = $product->delete();
 
-        if ($result) {
-            return response('success', 200)->header('Content-type', 'text/plain');
-        } else {
-            return response('failed', 401)->header('Content-type', 'text/plain');
+        if (!$result) {
+            return response('failed', 400)->header('Content-type', 'text/plain');
         }
+        return response('success', 200)->header('Content-type', 'text/plain');
     }
 
     public function getProducts()
@@ -132,8 +132,9 @@ class ProductController extends Controller
         $categories = $this->categories;
         $products = $this->getProductsByCategory($product->category_id);
         $sliders = Slider::where('is_active', '1')->get();
+        $reviews = Review::where('is_active', '1')->get();
 
-        return view('frontend.product_detail', ['product' => $product, 'categories' => $categories, 'products' => $products]);
+        return view('frontend.product_detail', ['product' => $product, 'categories' => $categories, 'products' => $products, 'reviews' => $reviews]);
     }
 
     public function getProductsByCategory($category_id)

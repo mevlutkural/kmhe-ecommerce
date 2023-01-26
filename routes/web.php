@@ -10,6 +10,7 @@ use App\Http\Controllers\Backend\UserController;
 use App\Http\Controllers\Backend\BrandController;
 use App\Http\Controllers\Backend\SliderController;
 use App\Http\Controllers\Frontend\HomeController;
+use App\Http\Controllers\ReviewController;
 
 /*
 |--------------------------------------------------------------------------
@@ -62,6 +63,13 @@ Route::group(['prefix' => 'dashboard', 'middleware' => 'AdminAuth'], function ()
 
     /* slider */
     Route::resource('/sliders', SliderController::class);
+
+    /* slider */
+    Route::resource('/reviews', ReviewController::class);
+    Route::post('/reviews/{review}/update-is-active', [ReviewController::class, 'updateIsActive']);
+    /* Route::post('/reviews', function(){
+        return response('success');
+    }); */
 });
 Route::get('/products/{product}/product-details', [ProductController::class, 'productDetails']);
 
