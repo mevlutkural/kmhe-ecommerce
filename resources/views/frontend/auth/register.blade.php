@@ -1,5 +1,5 @@
 @extends('frontend.layout.master')
-@section('title', 'Products | Komek E-Commerce')
+@section('title', 'Register | Komek E-Commerce')
 @section('content')
     @php
         $dontCollapse = true;
@@ -9,6 +9,9 @@
     <div class="container card bg-light mt-2 px-3 py-2 pb-4" style="border-radius:8px">
         <form class="mt-4" method="POST" action="{{ url('/register') }}">
             @csrf
+            <div class="col-sm-12">
+                <h2 class="display-4 text-center">Join US!</h2>
+            </div>
             <div class="col-sm-12">
                 <label for="name_surname">Name Surname</label>
                 <input id="name_surname" type="text" name="name_surname" class="form-control"

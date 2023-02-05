@@ -7,6 +7,12 @@
                 <a class="text-dark" href="">Help</a>
                 <span class="text-muted px-2">|</span>
                 <a class="text-dark" href="">Support</a>
+                @if (!session()->has('customer'))
+                    <span class="text-muted px-2">|</span>
+                    <a class="text-dark" href="{{ url('/register') }}">Register</a>
+                    <span class="text-muted px-2">|</span>
+                    <a class="text-dark" href="{{ url('/login') }}">Login</a>
+                @endif
             </div>
         </div>
         <div class="col-lg-6 text-center text-lg-right">
@@ -39,7 +45,8 @@
         <div class="col-lg-6 col-6 text-left">
             <form id='searchForm' method="get" action="{{ url('/search-for-products') }}">
                 <div class="input-group">
-                    <input id="searchInput" type="text" class="form-control" placeholder="Search for products" name="q">
+                    <input id="searchInput" type="text" class="form-control" placeholder="Search for products"
+                        name="q">
                     <div class="input-group-append">
                         <span class="input-group-text bg-transparent text-primary">
                             <i class="fa fa-search" onclick="searchForProducts()"></i>

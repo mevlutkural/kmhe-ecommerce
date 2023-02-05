@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
@@ -31,5 +32,9 @@ class Controller extends BaseController
         }
 
         return $data;
+    }
+
+    public function getCategories() {
+        return Category::where('is_active', '1')->get();
     }
 }

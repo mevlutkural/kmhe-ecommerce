@@ -10,6 +10,7 @@ use App\Http\Controllers\Backend\UserController;
 use App\Http\Controllers\Backend\BrandController;
 use App\Http\Controllers\Backend\SliderController;
 use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\Frontend\AuthController as FrontendAuthController;
 use App\Http\Controllers\Frontend\HomeController;
 use App\Http\Controllers\ReviewController;
 
@@ -82,3 +83,6 @@ Route::get('/test', [ProductController::class, 'getProducts']);
 
 Route::get('/register', [CustomerController::class, 'registerForm']);
 Route::post('/register', [CustomerController::class, 'register']);
+
+Route::get('/login', [FrontendAuthController::class, 'loginForm']);
+Route::post('/login', [FrontendAuthController::class, 'login']);
