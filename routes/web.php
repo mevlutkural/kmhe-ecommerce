@@ -9,6 +9,7 @@ use App\Http\Controllers\Backend\ProductImageController;
 use App\Http\Controllers\Backend\UserController;
 use App\Http\Controllers\Backend\BrandController;
 use App\Http\Controllers\Backend\SliderController;
+use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\Frontend\HomeController;
 use App\Http\Controllers\ReviewController;
 
@@ -70,7 +71,14 @@ Route::group(['prefix' => 'dashboard', 'middleware' => 'AdminAuth'], function ()
     /* Route::post('/reviews', function(){
         return response('success');
     }); */
+
+    Route::resource('/customers', CustomerController::class);
+    Route::get('/customers/change-password/{customer}', [CustomerController::class, 'changePasswordForm']);
+    Route::post('/customers/change-password/{customer}', [CustomerController::class, 'changePassword']);
 });
 Route::get('/products/{product}/product-details', [ProductController::class, 'productDetails']);
 Route::get('/search-for-products', [ProductController::class, 'searchForProducts']);
 Route::get('/test', [ProductController::class, 'getProducts']);
+
+Route::get('/register', [CustomerController::class, 'registerForm']);
+Route::post('/register', [CustomerController::class, 'register']);

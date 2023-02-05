@@ -35,6 +35,24 @@
                         </li>
                         <li class="sidebar-item">
                             <a class="sidebar-link has-arrow" href="javascript:void(0)" aria-expanded="false">
+                                <i data-feather="users" class="feather-icon"></i>
+                                <span class="hide-menu">Customers</span>
+                            </a>
+                            <ul aria-expanded="false" class="collapse first-level base-level-line">
+                                <li class="sidebar-item">
+                                    <a href="{{ url('/dashboard/customers') }}" class="sidebar-link">
+                                        <span class="hide-menu"> List&Manage Customers </span>
+                                    </a>
+                                </li>
+                                <li class="sidebar-item">
+                                    <a href="{{ url('/dashboard/customers/create') }}" class="sidebar-link">
+                                        <span class="hide-menu"> Create A Customer </span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="sidebar-item">
+                            <a class="sidebar-link has-arrow" href="javascript:void(0)" aria-expanded="false">
                                 <i data-feather="grid" class="feather-icon"></i>
                                 <span class="hide-menu">Categories</span>
                             </a>
