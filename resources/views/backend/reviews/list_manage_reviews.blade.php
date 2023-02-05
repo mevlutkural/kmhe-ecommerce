@@ -13,6 +13,8 @@
             <thead>
                 <tr>
                     <th>Name</th>
+                    <th>Email</th>
+                    <th>Phone Number</th>
                     <th>Content</th>
                     <th>Product</th>
                     <th>Rate</th>
@@ -26,6 +28,8 @@
                 @foreach ($reviews as $review)
                     <tr id="review{{ $review->review_id }}">
                         <td>{{ $review->name }}</td>
+                        <td>{{ $review->email }}</td>
+                        <td>{{ $review->phone_number }}</td>
                         <td>{{ $review->content }}</td>
                         <td>{{ $review->product->product_name }}</td>
                         <td>{{ $review->rating }}</td>

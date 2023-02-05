@@ -24,6 +24,7 @@ return new class extends Migration
             $table->string('description');
             $table->tinyInteger('stock_quantity')->default(1);
             $table->boolean('is_active')->default(0);
+            $table->unsignedMediumInteger('hit')->default(0);
             $table->timestamps();
         });
     }

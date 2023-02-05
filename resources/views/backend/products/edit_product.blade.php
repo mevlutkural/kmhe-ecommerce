@@ -1,8 +1,5 @@
 @extends('backend.layout.master')
 @section('title', 'Edit Product | Komek E-Commerce')
-@section('head')
-    <script src="{{ asset('assets/js/jquery-3.5.1.js') }}"></script>
-@endsection
 @section('content')
     <div class="page-breadcrumb">
         <h2>Products > Edit Product</h2>
@@ -26,7 +23,7 @@
                             <option value="">Select Category.</option>
                             @foreach ($categories as $category)
                                 <option value="{{ $category->id }}"
-                                    @if(old('category_id') == $category->id){{ 'selected' }}@elseif($product->category_id == $category->id){{ 'selected' }}@endif>
+                                    @if (old('category_id') == $category->id) {{ 'selected' }}@elseif($product->category_id == $category->id){{ 'selected' }} @endif>
                                     {{ $category->category_name }}</option>
                             @endforeach
                         </select>
@@ -52,13 +49,14 @@
                     </div>
                     <div class="col-md-6 mt-2">
                         <label for="description" class="form-label">Description</label>
-                        <textarea type="text" id="description" name="description" class="form-control">{{ old('description', $product->description) }}</textarea>
+                        <textarea id="description" type="text" id="description" name="description" class="form-control">{{ old('description', $product->description) }}</textarea>
                         @error('description')
                             <small class="text-danger">{{ $message }}</small>
                         @enderror
                     </div>
                     <div class="col-md-6 mt-2 pl-5">
-                        <input type="checkbox" id="is_active" name="is_active" class="form-check-input" {{ old('is_active', $product->is_active) ? 'checked' : ''}} value="1">
+                        <input type="checkbox" id="is_active" name="is_active" class="form-check-input"
+                            {{ old('is_active', $product->is_active) ? 'checked' : '' }} value="1">
                         <label for="is_active" class="form-label">Is Active?</label>
                         @error('description')
                             <small class="text-danger">{{ $message }}</small>
@@ -75,4 +73,9 @@
             </form>
         </div>
     </div>
+@endsection
+@section('bottom')
+    <script>
+        CKEDITOR.replace('description');
+    </script>
 @endsection

@@ -19,6 +19,7 @@ return new class extends Migration
             $table->text('content');
             $table->string('name');
             $table->string('email');
+            $table->string('phone_number');
             $table->boolean('is_active')->default(0);
             $table->unsignedBigInteger('product_id');
             $table->foreign('product_id')

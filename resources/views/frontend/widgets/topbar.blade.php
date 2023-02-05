@@ -37,12 +37,12 @@
             </a>
         </div>
         <div class="col-lg-6 col-6 text-left">
-            <form action="">
+            <form id='searchForm' method="get" action="{{ url('/search-for-products') }}">
                 <div class="input-group">
-                    <input type="text" class="form-control" placeholder="Search for products">
+                    <input id="searchInput" type="text" class="form-control" placeholder="Search for products" name="q">
                     <div class="input-group-append">
                         <span class="input-group-text bg-transparent text-primary">
-                            <i class="fa fa-search"></i>
+                            <i class="fa fa-search" onclick="searchForProducts()"></i>
                         </span>
                     </div>
                 </div>
@@ -60,3 +60,9 @@
         </div>
     </div>
 </div>
+<script>
+    function searchForProducts() {
+        let form = document.getElementById('searchForm');
+        form.submit();
+    }
+</script>

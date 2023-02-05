@@ -16,6 +16,7 @@ class Review extends Model
         'content',
         'name',
         'email',
+        'phone_number',
         'is_active',
         'product_id'
     ];

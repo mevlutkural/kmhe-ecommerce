@@ -1,8 +1,5 @@
 @extends('backend.layout.master')
 @section('title', 'Create Category | Komek E-Commerce')
-@section('head')
-    <script src="{{ asset('assets/js/jquery-3.5.1.js') }}"></script>
-@endsection
 @section('content')
     <div class="page-breadcrumb">
         <h2>Products > Create Product</h2>
@@ -50,13 +47,13 @@
                     </div>
                     <div class="col-md-6 mt-2">
                         <label for="description" class="form-label">Description</label>
-                        <textarea type="text" id="description" name="description" class="form-control">{{ old('description') }}</textarea>
+                        <textarea id="description" type="text" id="description" name="description" class="form-control">{{ old('description') }}</textarea>
                         @error('description')
                             <small class="text-danger">{{ $message }}</small>
                         @enderror
                     </div>
                     <div class="col-md-6 mt-2 pl-5">
-                        <input type="checkbox" id="is_active" name="is_active" class="form-check-input" {{ old('testtesttest') ? 'checked' : ''}} value="1">
+                        <input type="checkbox" id="is_active" name="is_active" class="form-check-input" value="1" checked>
                         <label for="is_active" class="form-label">Is Active?</label>
                         @error('testtesttest')
                             <small class="text-danger">{{ $message }}</small>
@@ -74,3 +71,9 @@
         </div>
     </div>
 @endsection
+@section('bottom')
+    <script>
+        CKEDITOR.replace('description');
+    </script>
+@endsection
+

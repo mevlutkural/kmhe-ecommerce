@@ -20,17 +20,17 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.2/jquery.min.js"
         integrity="sha512-tWHlutFnuG0C6nQRlpvrEhE4QpkG1nn2MOUMWmUeRePl4e3Aki0VB6W1v3oLjFtd0hVOtRQ9PHpSfN6u6/QXkQ=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-        <style>
-            .preloader {
-                width: 100vw;
-                height: 100vh;
-                top: 0;
-                left: 0;
-                position: fixed;
-                z-index: 99999;
-                background: #fff;
-            }
-        </style>
+    <style>
+        .preloader {
+            width: 100vw;
+            height: 100vh;
+            top: 0;
+            left: 0;
+            position: fixed;
+            z-index: 99999;
+            background: #fff;
+        }
+    </style>
     @yield('head')
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -38,6 +38,8 @@
     <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
     <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
 <![endif]-->
+    <script src="{{ asset('assets/js/jquery-3.5.1.js') }}"></script>
+    <script src="https://cdn.ckeditor.com/4.20.1/full-all/ckeditor.js"></script>
 </head>
 
 <body>
@@ -56,8 +58,7 @@
     <!-- All Jquery -->
     {{--  <script src="../assets/libs/jquery/dist/jquery.min.js"></script> --}}
     <script src="{{ asset('assets/js/backend/popper.min.js') }}"></script>
-    <{{-- script src="../assets/libs/bootstrap/dist/js/bootstrap.min.js"></script> --}}
-     <script src="{{ asset('assets/js/bootstrap.min.js') }}"></script>
+    <{{-- script src="../assets/libs/bootstrap/dist/js/bootstrap.min.js"></script> --}} <script src="{{ asset('assets/js/bootstrap.min.js') }}"></script>
     <script src="{{ asset('assets/js/backend/app-style-switcher.js') }}"></script>
     <script src="{{ asset('assets/js/backend/feather.min.js') }}"></script>
     <script src="{{ asset('assets/js/backend/perfect-scrollbar.jquery.min.js') }}"></script>

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ProductRequest;
+use App\Models\Brand;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use App\Models\Category;
@@ -15,7 +16,7 @@ use Illuminate\Support\Str;
 
 class ProductController extends Controller
 {
-    private $categories,$products;
+    private $categories, $products;
     public function __construct()
     {
         $this->categories = Category::where('is_active', '1')->get();
@@ -129,17 +130,20 @@ class ProductController extends Controller
 
     public function productDetails(Product $product)
     {
+        $product->hit++;
+        $product->save();
         $categories = $this->categories;
-        $products = $this->getProductsByCategory($product->category_id);
+        $products = $this->getProductByCategory($product->category_id);
         $sliders = Slider::where('is_active', '1')->get();
-        $reviews = Review::where('is_active', '1')->get();
+        $reviews = Review::where('is_active', '1')->where('product_id', $product->product_id)->orderBy('created_at', 'desc')->get();
+        $average = intval(Review::where('product_id', $product->product_id)->where('is_active', '1')->average('rating'));
 
-        return view('frontend.product_detail', ['product' => $product, 'categories' => $categories, 'products' => $products, 'reviews' => $reviews]);
+        return view('frontend.product_detail', ['product' => $product, 'categories' => $categories, 'products' => $products, 'reviews' => $reviews, 'average' => $average]);
     }
 
-    public function getProductsByCategory($category_id)
+    public function getProductByCategory($category_id)
     {
-        return Product::where('category_id', $category_id)->get();
+        return Product::where('category_id', $category_id)->take(1)->get();
     }
 
     public function updateIsActive(Product $product, Request $req)
@@ -156,5 +160,20 @@ class ProductController extends Controller
         $result = $product->save();
 
         return response($product);
+    }
+
+    public function searchForProducts(Request $req)
+    {
+        if (!$_GET['q']) {
+            return Redirect::to('/');
+        }
+        if (strlen($_GET['q']) < 3) {
+            return Redirect::to('/');
+        }
+
+        $products = Product::where('product_name', 'LIKE', '%' . $_GET['q'] . '%')->orWhere('description', 'LIKE', '%' . $_GET['q'] . '%')->get();
+        $brands = Brand::where('is_active', '1')->get();
+
+        return view('frontend.search_for_products', ['products' => $products, 'brands' => $brands, 'searchItem' => $_GET['q']]);
     }
 }

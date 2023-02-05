@@ -72,5 +72,5 @@ Route::group(['prefix' => 'dashboard', 'middleware' => 'AdminAuth'], function ()
     }); */
 });
 Route::get('/products/{product}/product-details', [ProductController::class, 'productDetails']);
-
+Route::get('/search-for-products', [ProductController::class, 'searchForProducts']);
 Route::get('/test', [ProductController::class, 'getProducts']);
