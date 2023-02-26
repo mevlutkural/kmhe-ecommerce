@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Backend;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\BrandRequest;
 use App\Models\Brand;
+use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Carbon;
 
@@ -27,7 +28,7 @@ class BrandController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create():View
     {
         return view('backend.brands.create_brand');
     }

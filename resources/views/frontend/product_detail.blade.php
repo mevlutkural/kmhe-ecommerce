@@ -121,7 +121,7 @@
                             </button>
                         </div>
                     </div>
-                    <button class="btn btn-primary px-3"><i class="fa fa-shopping-cart mr-1"></i> Add To Cart</button>
+                    <button onclick="addToCart({{ $product->product_id }}, {{ $user_id }}, '{{ url('/add-to-cart') }}', '{{ csrf_token() }}')" class="btn btn-primary px-3"><i class="fa fa-shopping-cart mr-1"></i> Add To Cart</button>
                 </div>
                 <div class="d-flex pt-2">
                     <p class="text-dark font-weight-medium mb-0 mr-2">Share on:</p>
@@ -369,37 +369,6 @@
                         error: function(err) {}
                     });
                 }
-
-                /* function newReview(rating, review, name, email, productId) {
-                    let form = document.getElementById('newReviewForm');
-                    form.addEventListener('submit', (e) => {
-                        e.preventDefault();
-                        [...this.elements].forEach(input => {
-
-                        })
-                    });
-                    let url = `http://127.0.0.1:8000/dashboard/reviews`;
-                    $.ajax({
-                        data: {
-                            '_token': "{{ csrf_token() }}",
-                            'rating': rating,
-                            'review': review,
-                            'name': name,
-                            'email': email,
-                            'product_id': productId
-                        },
-                        url: url,
-                        type: 'POST',
-                        success: function(res) {
-                            console.log(res);
-                        },
-                        error: function(err) {
-                            console.log(err);
-                        }
-                    });
-                } */
-
-
             }, 500);
         }
     </script>

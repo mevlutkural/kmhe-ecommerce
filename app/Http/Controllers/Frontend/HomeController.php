@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Frontend;
 use App\Http\Controllers\Controller;
 use App\Models\Brand;
 use App\Models\Category;
+use App\Models\Customer;
 use App\Models\Product;
 use App\Models\Slider;
 
@@ -16,6 +17,8 @@ class HomeController extends Controller
         $products = Product::where('is_active', '1')->take(8)->get();
         $brands = Brand::orderBy('sequence', 'asc')->where('is_active', '1')->get();
         $sliders = Slider::where('is_active', '1')->get();
+
+
 
         return view('frontend.index', [
             'categories' => $categories,

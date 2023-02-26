@@ -13,6 +13,7 @@ use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\Frontend\AuthController as FrontendAuthController;
 use App\Http\Controllers\Frontend\HomeController;
 use App\Http\Controllers\ReviewController;
+use App\Http\Controllers\Backend\CartController;
 
 /*
 |--------------------------------------------------------------------------
@@ -86,3 +87,8 @@ Route::post('/register', [CustomerController::class, 'register']);
 
 Route::get('/login', [FrontendAuthController::class, 'loginForm']);
 Route::post('/login', [FrontendAuthController::class, 'login']);
+
+/* cart */
+Route::post('/add-to-cart', [CartController::class, 'addToCart'])->name('add-to-cart');
+Route::delete('/delete-cart-item/{cart}', [CartController::class, 'deleteCartItem'])->name('delete-cart-item');
+Route::get('/carts', [CartController::class, 'index'])->name('carts');

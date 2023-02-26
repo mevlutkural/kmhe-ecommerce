@@ -1,5 +1,5 @@
 @extends('frontend.layout.master')
-@section('title', 'Register | Komek E-Commerce')
+@section('title', 'Login | Komek E-Commerce')
 @section('content')
     @php
         $dontCollapse = true;
@@ -8,9 +8,13 @@
     @include('frontend.widgets.navbar')
     <div class="container card bg-light mt-2 px-3 py-2 pb-4" style="border-radius:8px">
         @if ($errors->any())
-            <pre>
-                {{ print_r($errors->all()) }}
-            </pre>
+            <div id="alert" class="alert alert-danger" style="display:none;">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
         @endif
         <form class="mt-4" method="POST" action="{{ url('/login') }}">
             @csrf
@@ -37,3 +41,15 @@
         </form>
     </div>
 @endsection
+@push('scripts')
+    <script>
+        $(function() {
+            if ($('#alert')) {
+                $('#alert').fadeIn('slow');
+                setTimeout(() => {
+                    $('#alert').fadeOut('slow');
+                }, 4500);
+            }
+        });
+    </script>
+@endpush

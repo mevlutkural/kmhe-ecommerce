@@ -15,6 +15,6 @@ class ProductImageSeeder extends Seeder
      */
     public function run()
     {
-        \App\Models\ProductImage::factory(6)->create();
+        /* \App\Models\ProductImage::factory(1)->create(); */
     }
 }

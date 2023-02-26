@@ -29,12 +29,11 @@ class AuthController extends Controller
 
         $customer = Customer::where('email', $req->email)->first();
 
-        dd($customer, $req->password, Hash::make($req->password));
         if (!$customer) {
             return Redirect::to('/login')->withErrors(['error' => 'There is no email adress equal to your email adress.']);
         }
 
-        if ($customer->password != Hash::make($req->password)) {
+        if (!Hash::check($req->password, $customer->password)) {
             return Redirect::to('/login')->withErrors(['error' => 'Passwords don\'t match.']);
         }
 
@@ -50,4 +49,5 @@ class AuthController extends Controller
         Auth::logout('user');
         return redirect()->route('loginForm');
     }
+
 }

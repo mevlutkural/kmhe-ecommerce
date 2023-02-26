@@ -20,8 +20,7 @@
                         <a href="" class="btn btn-sm text-dark p-0"><i
                                 class="fas fa-eye text-primary mr-1"></i>View
                             Detail</a>
-                        <a href="" class="btn btn-sm text-dark p-0"><i
-                                class="fas fa-shopping-cart text-primary mr-1"></i>Add To Cart</a>
+                        <button onclick="addToCart({{ $product->product_id }}, {{ $user_id }}, '{{ url('/add-to-cart') }}', '{{ csrf_token() }}')" class="btn btn-sm text-dark p-0"><i class="fas fa-shopping-cart text-primary mr-1"></i>Add To Cart</button>
                     </div>
                 </div>
             </div>

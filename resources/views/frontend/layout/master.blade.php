@@ -43,5 +43,9 @@
 
     <!-- Template Javascript -->
     <script src="{{ asset('assets/js/main.js') }}"></script>
+
+    <script src="{{ asset('assets/js/utils/addToCart.js') }}"></script>
+
+    @stack('scripts')
 </body>
 </html>
